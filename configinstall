@@ -1,0 +1,33 @@
+#!/bin/bash
+pluginpath="$(dirname "$(readlink -f $0)")"
+cd "$pluginpath/.."
+
+for plugin in *; do
+    [ -d "$plugin" ] || continue
+
+    [ "$plugin" = "config" ] && continue
+    cut -d' ' -f1 "$pluginpath/rc" | fgrep -q "$plugin" || {
+        echo "removing $plugin"
+        rm -rf "$plugin"
+    }
+done
+
+cat "$pluginpath/rc" | while read line; do
+    name="$(echo "$line" | cut -d' ' -f1)"
+    url="$(echo "$line" | cut -d' ' -f2)"
+    [ -d "$name" ] && (
+        cd "$name" && echo -n "$name: " && git pull
+    ) || git clone $url $name
+done
+
+for plugin in *; do
+    [ -d "$plugin" ] || continue
+
+    [ "$plugin" = "config" ] && continue
+    (
+        cd "$plugin"
+        git submodule init
+        git submodule update --recursive
+    )
+    [ -x "$plugin/configinstall" ] && "$plugin/configinstall"
+done
