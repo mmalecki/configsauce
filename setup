@@ -1,0 +1,11 @@
+#!/bin/bash
+pluginpath="$(dirname "$(readlink -f $0)")"
+plugintarget="$HOME/.configs/config"
+
+mkdir -pv "$(dirname "$plugintarget")"
+rm -rf "$plugintarget"
+
+mv "$pluginpath" "$plugintarget"
+pluginpath="$plugintarget"
+
+exec "$pluginpath/configinstall"
