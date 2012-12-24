@@ -1,5 +1,8 @@
 #!/bin/bash
 pluginpath="$(dirname "$(readlink -f $0)")"
+
+cd "$pluginpath"
+
 OLD_HEAD=$(git show-ref HEAD | cut -d' ' -f1)
 git pull
 HEAD=$(git show-ref HEAD | cut -d' ' -f1)
@@ -7,7 +10,7 @@ if [ "$HEAD" != "$OLD_HEAD" ]; then
     exec $0 $@
 fi
 
-cd "$pluginpath/.."
+cd ..
 
 for plugin in *; do
     [ -d "$plugin" ] || continue
