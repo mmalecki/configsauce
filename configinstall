@@ -36,10 +36,7 @@ for plugin in *; do
     [ "$plugin" = "config" ] && continue
     (
         cd "$plugin"
-        git submodule init
-        git submodule update --recursive
-        git submodule foreach git submodule init
-        git submodule foreach git submodule update --recursive
+        git submodule update --init --recursive
     )
     [ -x "$plugin/configinstall" ] && "$plugin/configinstall"
 done
