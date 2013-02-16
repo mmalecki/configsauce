@@ -6,3 +6,4 @@ theme https://github.com/nathan7/themesauce.git
 util https://github.com/nathan7/utilsauce.git
 vim https://github.com/nathan7/vimsauce.git
 input https://github.com/nathan7/inputsauce.git
+../.oh-my-zsh https://github.com/nathan7/oh-my-zsh.git
