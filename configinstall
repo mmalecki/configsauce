@@ -11,6 +11,8 @@ if [ "$HEAD" != "$OLD_HEAD" ]; then
 fi
 
 cd ..
+[ -L "autostart" ] || mv "autostart" "autostart.local"
+ln -svf "config/autostart"
 
 for plugin in *; do
     [ -d "$plugin" ] || continue

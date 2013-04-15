@@ -1,0 +1,9 @@
+#!/bin/sh
+pluginpath="$(dirname "$0")"
+(
+  cd "$pluginpath"
+  for cur in *; do
+    [ "config" != "$cur" ] && [ -x "$cur/autostart" ] && "$cur/autostart" &
+  done
+)
+[ -f "$pluginpath/autostart.local" ] && source "$pluginpath/autostart.local"
