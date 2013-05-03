@@ -4,6 +4,7 @@ pluginpath="$(dirname "$(readlink -f $0)")"
 cd "$pluginpath"
 
 OLD_HEAD=$(git show-ref HEAD | cut -d' ' -f1)
+git config --bool pull.rebase true
 git pull
 HEAD=$(git show-ref HEAD | cut -d' ' -f1)
 if [ "$HEAD" != "$OLD_HEAD" ]; then
@@ -27,9 +28,16 @@ done
 cat "$pluginpath/rc" | while read line; do
     name="$(echo "$line" | cut -d' ' -f1)"
     url="$(echo "$line" | cut -d' ' -f2)"
-    [ -d "$name" ] && (
-        cd "$name" && echo -n "$name: " && git pull
-    ) || git clone $url $name
+    [ -d "$name" ] && (set -e
+        cd "$name"
+        echo -n "$name: "
+        git config --bool pull.rebase true      
+        git pull --rebase
+    ) || (
+        git clone $url "$name"
+        cd "$name"
+        git config --bool pull.rebase true
+    )
 done
 
 for plugin in *; do
