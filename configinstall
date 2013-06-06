@@ -32,7 +32,9 @@ cat "$pluginpath/rc" | while read line; do
         cd "$name"
         echo -n "$name: "
         git config --bool pull.rebase true      
+        git stash save "configsauce autostash"
         git pull --rebase
+        git stash pop
     ) || (
         git clone $url "$name"
         cd "$name"
