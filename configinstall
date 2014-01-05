@@ -28,18 +28,14 @@ done
 cat "$pluginpath/rc" | while read line; do
     name="$(echo "$line" | cut -d' ' -f1)"
     url="$(echo "$line" | cut -d' ' -f2)"
-    [ -d "$name" ] && (set -e
+    (
+        [ -d "$name" ] || git clone "$url" "$name"
         cd "$name"
         echo -n "$name: "
         git config --bool pull.rebase true      
-        git stash save "configsauce autostash"
-        stash=$?
+        [ "$(git stash save "configsauce autostash")" != "No local changes to save" ] && stash=1 || stash=0
         git pull --rebase
         [ $stash -eq 0 ] && git stash pop
-    ) || (
-        git clone $url "$name"
-        cd "$name"
-        git config --bool pull.rebase true
     )
 done
 
