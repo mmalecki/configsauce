@@ -14,3 +14,5 @@ COPY --chown=maciej:maciej . .configs/config
 COPY --chown=maciej:maciej rc.headless .configs/config/rc
 
 RUN cd .configs/config && ./configinstall
+
+ENTRYPOINT ["/bin/zsh"]
