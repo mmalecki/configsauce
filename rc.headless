@@ -1,4 +1,5 @@
-vim https://github.com/mmalecki/vimsauce.git
-ubuntu https://github.com/mmalecki/ubuntusauce.git
 linux https://github.com/mmalecki/linuxsauce.git
+ubuntu https://github.com/mmalecki/ubuntusauce.git
+dev https://github.com/mmalecki/devsauce.git
 shell https://github.com/mmalecki/shellsauce.git
+vim https://github.com/mmalecki/vimsauce.git
