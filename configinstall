@@ -36,16 +36,8 @@ cat "$pluginpath/rc" | while read line; do
         [ "$(git stash save "configsauce autostash")" != "No local changes to save" ] && stash=1 || stash=0
         git pull --rebase
         [ $stash -eq 0 ] && git stash pop
-    )
-done
 
-for plugin in *; do
-    [ -d "$plugin" ] || continue
-
-    [ "$plugin" = "config" ] && continue
-    (
-        cd "$plugin"
         git submodule update --init --recursive
+        [ -x "configinstall" ] && ./configinstall
     )
-    [ -x "$plugin/configinstall" ] && "$plugin/configinstall"
 done
