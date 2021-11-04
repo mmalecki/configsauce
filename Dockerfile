@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bookworm
 RUN adduser --disabled-password --gecos '' maciej
 RUN adduser maciej sudo
 
